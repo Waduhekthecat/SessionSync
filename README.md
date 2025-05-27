@@ -14,11 +14,11 @@ sudo apt install libwebkit2gtk-4.0-dev build-essential curl wget file libssl-dev
 
 3. Make sure Node is up to date
 
-4. Install Frontend Dependencies
+4. Install Frontend Dependencies:
 
 npm install
 
-5. Run Tauri Build 
+5. Build and run program:
 
 npm run tauri dev
 

@@ -50,6 +50,10 @@ const TracksPanel: React.FC = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (document.activeElement?.tagName === 'INPUT' || document.activeElement?.tagName === 'TEXTAREA') {
+        return;
+      }
+
       if ((e.key === 'Delete' || e.key === 'Backspace') && selectedTrackId) {
         setTracks((prevTracks) => prevTracks.filter(track => track.id !== selectedTrackId));
         setSelectedTrackId(null);
@@ -82,7 +86,10 @@ const TracksPanel: React.FC = () => {
 
 const TracksContainer = styled.div`
   grid-area: 4 / 1 / 5 / 6;
-  height: 100%;
+  height: 322px;
+  max-height: 322px;
+  overflow-y: scroll;  
+  overflow-x: hidden;
   width: 100%;
   background-color: #1C1C1C;
   padding-left: 5px;
@@ -98,7 +105,7 @@ const AddTrackButton = styled.div`
   text-align: center;
   opacity: 70%;
   display: inline-block;
-  padding: 10px;        
+  padding: 12px;        
   width: auto;            
   &:hover {
     text-decoration: underline;

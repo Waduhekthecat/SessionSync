@@ -13,25 +13,23 @@ const VerticalDashboard: React.FC = () => {
 };
 
 const Dashboard = styled.div`
+  grid-area: 2 / 10 / 5 / 11;
   min-width: 80px;               
-  height: 100vh;
-  width: 100px;
-  position: fixed;           
-  top: 60px;                 
-  right: 0;                  
+  width: 100%;
+  height: calc(100%);              
   background-color: #222;    
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10px 0;
   box-shadow: -2px 0 5px rgba(0,0,0,0.3);
 `;
 const IconPlaceholder = styled.div`
   width: 40px;
   height: 40px;
-  background-color: #444;
-  margin: 10px 0;
+  background-color: #00D0FF;
+  margin: 10px 30px;
   border-radius: 8px;
+  cursor: pointer;
 `;
 
 export default VerticalDashboard;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PlaceholderImage from '../assets/images/placeholder.jpg'; 
+import PlaceholderImage from '../../assets/images/placeholder.jpg'; 
 
 const VisualDisplay: React.FC = () => {
   return (
@@ -11,15 +11,15 @@ const VisualDisplay: React.FC = () => {
 };
 
 const DisplayContainer = styled.div`
-  flex: 1;
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
+    grid-area: 2 / 1 / 3 / 6;
+    flex: 1;
+    width: 100%;
+    height: 321px;
 `;
 const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 `;
 
 export default VisualDisplay;

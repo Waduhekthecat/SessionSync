@@ -1,18 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const VerticalDashboard: React.FC = () => {
+const DashboardMenu: React.FC = () => {
   return (
-    <Dashboard>
+    <DashboardContainer>
       <IconPlaceholder />
       <IconPlaceholder />
       <IconPlaceholder />
       {/* Add more icons here */}
-    </Dashboard>
+    </DashboardContainer>
   );
 };
 
-const Dashboard = styled.div`
+const DashboardContainer = styled.div`
   grid-area: 2 / 10 / 5 / 11;
   min-width: 80px;               
   width: 100%;
@@ -32,4 +32,4 @@ const IconPlaceholder = styled.div`
   cursor: pointer;
 `;
 
-export default VerticalDashboard;
+export default DashboardMenu;

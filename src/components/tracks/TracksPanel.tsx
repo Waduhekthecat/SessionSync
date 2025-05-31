@@ -1,17 +1,72 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Track from '../track/Track';
+import Track from './Track';
 
 interface TrackData {
   id: string;
+  isMute: boolean;
+  isSolo: boolean;
+  isSoloMute: boolean;
 }
+
 
 const TracksPanel: React.FC = () => {
   const [tracks, setTracks] = useState<TrackData[]>([]);
   const [selectedTrackId, setSelectedTrackId] = useState<string | null>(null);
+  const isAnySoloed = tracks.some(track => track.isSolo);
 
-  // Refs array for tracks — will be updated on each render
   const trackRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const soloActive = tracks.some(track => track.isSolo);
+
+  const addTrack = () => {
+    setTracks((prev) => {
+
+      const newTrack: TrackData = {
+        id: crypto.randomUUID(),
+        isMute: false,
+        isSoloMute: false,
+        isSolo: false
+      };
+
+      return [...prev, newTrack];
+    });
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as Node;
+    const clickedInsideTrack = trackRefs.current.some(ref => ref?.contains(target));
+
+    if (!clickedInsideTrack) {
+      setSelectedTrackId(null);
+    }
+  };
+
+  const handleFXClick = (trackId: string) => {
+  console.log("FX clicked for track", trackId);
+  // Show your plugin manager modal or whatever
+};
+
+{/* <Track
+  // ... other props
+  onFXClick={() => handleFXClick(track.id)}
+  ref={(el) => {
+    trackRefs.current[index] = el;
+  }}
+/> */}
+
+
+  const toggleMute = (id: string) => {
+    setTracks((prev) =>
+      prev.map((track) =>
+        track.id === id ? { ...track, isMute: !track.isMute, isSolo: false } : track
+      )
+    );
+    console.log("Track ", { id }, "is toggling mute");
+  };
+
+  const toggleSolo = (id: string) => {
+    console.log("Track ID: ", {id}, " solo toggled")
+  };
 
   // Whenever tracks change, reset the refs array length accordingly
   useEffect(() => {
@@ -20,24 +75,6 @@ const TracksPanel: React.FC = () => {
 
   const handleSelectTrack = (id: string) => {
     setSelectedTrackId(id);
-  };
-
-  const addTrack = () => {
-    const newTrack: TrackData = {
-      id: crypto.randomUUID(),
-    };
-    setTracks((prev) => [...prev, newTrack]);
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    const target = event.target as Node;
-
-    // Check if click is inside any of the track refs
-    const clickedInsideTrack = trackRefs.current.some(ref => ref?.contains(target));
-
-    if (!clickedInsideTrack) {
-      setSelectedTrackId(null);
-    }
   };
 
   useEffect(() => {
@@ -73,7 +110,13 @@ const TracksPanel: React.FC = () => {
           id={track.id}
           number={index + 1}
           isSelected={track.id === selectedTrackId}
+          isMute={track.isMute}
+          isSolo={track.isSolo}
           onSelect={handleSelectTrack}
+          onToggleMute={() => toggleMute(track.id)}
+          onToggleSolo={() => toggleSolo(track.id)}
+          onFXClick={() => handleFXClick(track.id)}
+
           ref={(el) => {
             trackRefs.current[index] = el;
           }}
@@ -83,6 +126,9 @@ const TracksPanel: React.FC = () => {
     </TracksContainer>
   );
 };
+
+export default TracksPanel;
+
 
 const TracksContainer = styled.div`
   grid-area: 4 / 1 / 5 / 6;
@@ -114,5 +160,3 @@ const AddTrackButton = styled.div`
 
   }
 `;
-
-export default TracksPanel;

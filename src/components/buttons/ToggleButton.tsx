@@ -5,12 +5,20 @@ interface ToggleButtonProps {
   label: string;
   active?: boolean;
   onClick?: () => void;
-  color?: 'green' | 'red' | 'blue'; 
+  color?: null | 'green' | 'red' | 'light-red';
+  isDisabled: boolean;
 }
 
-const ToggleButton: React.FC<ToggleButtonProps> = ({ label, active = false, onClick, color = 'blue'}) => {
+const ToggleButton: React.FC<ToggleButtonProps> = ({ label, active = false, onClick, color = null, isDisabled = false }) => {
   return (
-    <StyledButton $active={active} $color={color} onClick={onClick} onMouseDown={e => e.preventDefault()}>
+    <StyledButton
+      $active={active}
+      $color={color}
+      $disabled={isDisabled}
+      onClick={onClick}
+      onMouseDown={e => e.preventDefault()}
+      type="button"
+    >
       {label}
     </StyledButton>
   );
@@ -18,21 +26,19 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({ label, active = false, onCl
 
 export default ToggleButton;
 
-const StyledButton = styled.div<{ $active: boolean; $color: 'green' | 'red' | 'blue' }>`
+const StyledButton = styled.button<{ $active: boolean; $color: null | 'green' | 'red' | 'light-red'; $disabled?: boolean }>`
   width: 35px;
   height: 35px;
-  background-color: #3F3F3F;
+  cursor: ${({ $disabled }) => ($disabled ? 'none' : 'pointer')};
+  pointer-events: ${({ $disabled }) => ($disabled ? 'none' : 'auto')};
+  background-color: #3f3f3f;
   color: ${({ $active, $color }) => {
     if (!$active) return 'white';
     switch ($color) {
-      case 'green':
-        return '#00FF00';
-      case 'red':
-        return '#FF4D4D';
-      case 'blue':
-        return '#00BFFF';
-      default:
-        return 'white';
+      case 'green': return '#00ff00';
+      case 'red': return '#ff4d4d';
+      case 'light-red': return '#ff9999';
+      default: return 'white';
     }
   }};
   font-weight: bold;
@@ -40,15 +46,18 @@ const StyledButton = styled.div<{ $active: boolean; $color: 'green' | 'red' | 'b
   display: flex;
   align-items: center;
   justify-content: center;
+  border: none; 
+  outline: none; 
   border-radius: 4px;
-  cursor: pointer;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 
   &:hover {
-    background-color: #505050;
+    background-color: ${({ $disabled }) => ($disabled ? '#3f3f3f' : '#505050')};
+  }
+
+  &:focus {
+    outline: none; 
+    border: none;  
   }
 `;

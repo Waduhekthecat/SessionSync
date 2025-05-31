@@ -2,19 +2,21 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PowerSettingsNewIcon from '@mui/icons-material/PowerSettingsNew';
 
-const FX: React.FC = () => {
-  const [isActive, setIsActive] = useState(false);
+interface FXProps {
+  isActive: boolean;
+  onFXClick: () => void;
+  onTogglePower: () => void;
+}
 
-  const handlePowerClick = () => {
-    setIsActive(prev => !prev);
-  };
+const FX: React.FC<FXProps> = ({ isActive, onFXClick, onTogglePower }) => {
 
   return (
     <ButtonWrapper>
-      <LeftButton>FX</LeftButton>
-      <RightButton $active={isActive} onClick={handlePowerClick}>
-        <PowerIcon $active={isActive} />
-      </RightButton>
+      <FXButton onClick= {onFXClick}>FX</FXButton>
+      <PowerButton $active={isActive}
+        onClick={() => { if (onTogglePower) onTogglePower(); else onFXClick(); }}>
+        <PowerIcon fontSize="small" $active={isActive} />
+      </PowerButton>
     </ButtonWrapper>
   );
 };
@@ -30,7 +32,7 @@ const ButtonWrapper = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 `;
 
-const LeftButton = styled.div`
+const FXButton = styled.div`
   background-color: #3F3F3F;
   color: rgb(61, 187, 255);
   font-weight: bold;
@@ -41,7 +43,7 @@ const LeftButton = styled.div`
   cursor: pointer;
 `;
 
-const RightButton = styled.div<{ $active: boolean }>`
+const PowerButton = styled.div<{ $active: boolean }>`
   background-color: ${({ $active }) => ($active ? '#D7D7D7' : '#D7D7D7')};
   flex: 1;
   display: flex;

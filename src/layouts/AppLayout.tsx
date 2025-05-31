@@ -2,13 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import TitleBar from '../components/ui/TitleBar';
 import VisualDisplay from '../components/ui/VisualDisplay';
-import UserPanel from '../components/ui/UserPanel';
-import VerticalDashboard from '../components/ui/VerticalDashboard';
+import UserPanel from '../components/user/UserPanel';
+import VerticalDashboard from '../components/dasboard/VerticalDashboard';
 import ControlBar from '../components/ui/ControlBar';
-import TracksPanel from '../components/ui/TracksPanel';
-import ChatPanel from '../components/ui/ChatPanel';
+import TracksPanel from '../components/tracks/TracksPanel';
+import ChatPanel from '../components/dasboard/ChatPanel';
 import FooterBar from '../components/ui/Footer';
-// import Track from '../components/track/Track';
 
 const AppLayout: React.FC = () => {
     return (

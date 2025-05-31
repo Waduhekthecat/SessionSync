@@ -1,60 +1,73 @@
-import { useState, forwardRef } from 'react';
+import { useState, forwardRef, useRef } from 'react';
 import styled from 'styled-components';
 import Label from './Label';
 import InputSelector, { AudioInputOption } from './AudioInputSelector';
 import FXButtonGroup from '../buttons/FxButtonGroup';
-import ToggleButton from '../buttons/ToggleButton';
 import Knob from './Knob';
 import { pan, vol } from '../../utils/KnobFormats';
 import TrackMonitor from './TrackMonitor';
+import MuteSoloButtons from './ToggleButtons';
+import PluginManager from './PluginManager';
 
-interface TrackProps {
+export interface TrackProps {
   id: string;
   number: number;
   isSelected: boolean;
+  isMute: boolean; 
+  isSolo: boolean; 
   onSelect: (id: string) => void;
+  onToggleMute: () => void;
+  onToggleSolo: () => void;
+  onFXClick: () => void;
 }
 
 const Track = forwardRef<HTMLDivElement, TrackProps>(
-  ({ id, number, isSelected, onSelect }, ref) => {
+  ({ id, number, isSelected, isMute, isSolo, onSelect, onToggleMute, onToggleSolo, onFXClick }, ref) => {
   const [selectedInput, setSelectedInput] = useState<AudioInputOption | ''>('');
+  const [trackMuted, setTrackMuted] = useState(false);
   const [levelLeft, setLevelLeft] = useState(0); // only left for mono
   const [levelRight, setLevelRight] = useState(0);
-
-  const [isMute, setIsMute] = useState(false);
-  const [isSolo, setIsSolo] = useState(false);
-
+  const [isFXActive, setIsFXActive] = useState(false);
+  const [isPluginManagerOpen, setPluginManagerOpen] = useState(false);
+  const [activePlugins, setActivePlugins] = useState<string[]>([]);
+  
   const handleInputChange = (newInput: AudioInputOption | '') => {
     setSelectedInput(newInput);
     console.log('Selected input:', newInput || 'None');
   };
 
-  const handleMuteToggle = () => {
-    if (isMute) {
-      setIsMute(false);
-      console.log("Track", {number}, "un-muted");
-    } else {
-      setIsMute(true);
-      console.log("Track", {number}, "muted");
-      setIsSolo(false);
-    }
-  };
+  // mock available plugins list (you will replace with your directory scan)
+  const availablePlugins = ['Reverb', 'Delay', 'Chorus', 'Compressor'];
 
-  const handleSoloToggle = () => {
-    if (isSolo) {
-      setIsSolo(false);
-      console.log("Track", {number}, "not solo");
-    } else {
-      setIsSolo(true);
-      console.log("Track", {number}, "is solo");
-      setIsMute(false);
+  const openPluginManager = () => setPluginManagerOpen(true);
+  const closePluginManager = () => setPluginManagerOpen(false);
+
+const handleAddPlugin = (plugin: string) => {
+  setActivePlugins(prev => {
+    const newPlugins = [...prev, plugin];
+    if (prev.length === 0 && newPlugins.length === 1) {
+      setIsFXActive(true);
     }
-  };
+    return newPlugins;
+  });
+};
+
+const handleRemovePlugin = (plugin: string) => {
+  setActivePlugins(prev => {
+    const newPlugins = prev.filter(p => p !== plugin);
+    if (prev.length > 0 && newPlugins.length === 0) {
+      setIsFXActive(false);
+    }
+    return newPlugins;
+  });
+};
 
 // mockLeft and mockRight will be replaced with actual track readings
-    const mockLeft = Math.random();  // trackLevels.left
-    const mockRight = Math.random(); // trackLevels.right
+    const leftRef = useRef(Math.random());
+    const rightRef = useRef(Math.random());
 
+    const mockLeft = leftRef.current;
+    const mockRight = rightRef.current;
     return (
       <TrackWrapper ref={ref} onClick={() => onSelect(id)} $isSelected={isSelected}>
         
@@ -69,31 +82,35 @@ const Track = forwardRef<HTMLDivElement, TrackProps>(
         <Knob minAngle={-135} maxAngle={135} label="VOL" format={vol} />
         <Knob minAngle={-90} maxAngle={90} label="PAN" format={pan} />
         
-        <FXButtonGroup />
+        <FXButtonGroup 
+          onFXClick={openPluginManager}   
+          isActive={isFXActive}
+          onTogglePower={() => setIsFXActive(prev => !prev)}
+        />
+        
+        <PluginManager
+          onClose={closePluginManager}
+          isOpen={isPluginManagerOpen}
+          availablePlugins={availablePlugins}
+          activePlugins={activePlugins}
+          onAddPlugin={handleAddPlugin}
+          onRemovePlugin={handleRemovePlugin}
+        />
 
-        <ToggleButton label="M" active={isMute} onClick={handleMuteToggle} />
-        <ToggleButton label="S" active={isSolo} onClick={handleSoloToggle} />
+        <MuteSoloButtons />
         
         <TrackMonitor
-          leftLevel={mockLeft}
-          rightLevel={selectedInput === 'stereo-1-2' ? mockRight : undefined}
+          leftLevel={isMute ? 0 : mockLeft}
+          rightLevel={isMute || selectedInput !== 'stereo-1-2' ? undefined : mockRight}
           height={60}
           width={8}
         />
-
       </TrackWrapper>
     );
   }
 );
 
 export default Track;
-
-const TrackMonitorContainer = styled.div`
-  display: flex;
-  gap: 3px;
-  align-items: center;
-  height: 100%;
-`;
 
 const TrackWrapper = styled.div<{ $isSelected: boolean }>`
   display: flex;

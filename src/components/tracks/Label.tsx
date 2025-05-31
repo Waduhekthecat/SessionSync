@@ -47,7 +47,7 @@ const LabelContainer = styled.div`
   align-items: center;
   padding: 0 8px;
   &:hover {
-    border-color: rgb(61, 187, 255);;
+    border-color: rgb(61, 187, 255);
   }
 
   &:focus-within {

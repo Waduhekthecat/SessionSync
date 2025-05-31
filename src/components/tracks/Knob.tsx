@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import ToolTipPortal from '../portals/ToolTip';
 
@@ -17,30 +16,32 @@ const innerColor = '#484848';
 const baseColor = '#000000';
 
 const Knob: React.FC<KnobProps> = ({ minAngle, maxAngle, label, format }) => {
-  const tooltipRoot = document.getElementById('tooltip-root');
   const [isHovered, setIsHovered] = useState(false);
   const [angle, setAngle] = useState(0);
+
   const knobRef = useRef<HTMLDivElement>(null);
+  const startY = useRef<number | null>(null);
   const dragging = useRef(false);
 
   const degToRad = (deg: number) => (deg * Math.PI) / 180;
   const clampAngle = (deg: number) => Math.min(maxAngle, Math.max(minAngle, deg));
 
   const onMouseMove = (e: MouseEvent) => {
-    if (!dragging.current || !knobRef.current) return;
+  if (!dragging.current || startY.current === null) return;
 
-    const rect = knobRef.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const dx = e.clientX - centerX;
-    const dy = centerY - e.clientY;
-    let newAngle = Math.atan2(dx, dy) * (180 / Math.PI);
-    newAngle = clampAngle(newAngle);
-    setAngle(newAngle);
-  };
+  const deltaY = e.clientY - startY.current;
+  const sensitivity = 0.5;
+
+  setAngle(prevAngle => {
+    const newAngle = clampAngle(prevAngle - deltaY * sensitivity);
+    startY.current = e.clientY; 
+    return newAngle;
+  });
+};
 
   const onMouseUp = () => {
     dragging.current = false;
+    startY.current = null;
     window.removeEventListener('mousemove', onMouseMove);
     window.removeEventListener('mouseup', onMouseUp);
   };
@@ -48,6 +49,7 @@ const Knob: React.FC<KnobProps> = ({ minAngle, maxAngle, label, format }) => {
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     dragging.current = true;
+    startY.current = e.clientY;
     window.addEventListener('mousemove', onMouseMove);
     window.addEventListener('mouseup', onMouseUp);
   };
@@ -56,10 +58,6 @@ const Knob: React.FC<KnobProps> = ({ minAngle, maxAngle, label, format }) => {
     e.preventDefault();
     setAngle(0);
   };
-
-  const pointerLength = innerSize / 2;
-  const pointerX = pointerLength * Math.sin(degToRad(angle));
-  const pointerY = -pointerLength * Math.cos(degToRad(angle));
 
   return (
     <KnobWrapper>

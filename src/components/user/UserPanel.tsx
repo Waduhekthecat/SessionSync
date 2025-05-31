@@ -9,10 +9,8 @@ interface UserData {
 
 const UserPanel: React.FC = () => {
 const [joined, setJoined] = useState(false);
-const [users, setUsers] = useState([
-    { id: 'user1', name: 'Elijah' },
-    { id: 'user2', name: 'Jeff' },
-  ]);
+const [users, setUsers] = useState<UserData[]>([]);
+  
 
   const addUser = () => {
     const newUser: UserData = {

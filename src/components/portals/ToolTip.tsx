@@ -7,6 +7,18 @@ interface ToolTipProps {
   children: React.ReactNode;
 }
 
+const ToolTip: React.FC<ToolTipProps> = ({ top, left, children }) => {
+  const tooltipRoot = document.getElementById('tooltip-root');
+  if (!tooltipRoot) return null;
+
+  return ReactDOM.createPortal(
+    <TooltipWrapper top={top} left={left}>{children}</TooltipWrapper>,
+    tooltipRoot
+  );
+};
+
+export default ToolTip;
+
 const TooltipWrapper = styled.div<{ top: number; left: number }>`
   position: absolute;
   top: ${(props) => props.top}px;
@@ -24,15 +36,3 @@ const TooltipWrapper = styled.div<{ top: number; left: number }>`
   z-index: 9999;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 `;
-
-const ToolTip: React.FC<ToolTipProps> = ({ top, left, children }) => {
-  const tooltipRoot = document.getElementById('tooltip-root');
-  if (!tooltipRoot) return null;
-
-  return ReactDOM.createPortal(
-    <TooltipWrapper top={top} left={left}>{children}</TooltipWrapper>,
-    tooltipRoot
-  );
-};
-
-export default ToolTip;

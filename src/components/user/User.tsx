@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import UserLabel from './UserLabel';
 import ToggleButton from '../buttons/ToggleButton';
-import UserAudioMonitor from './UserAudioMonitor';
+import UserMonitor from './UserMonitor';
 import SyncIndicator from './SyncIndicator';
 import UserLatency from './UserLatency'; 
 
@@ -52,15 +52,19 @@ const User: React.FC<UserProps> = ({ name }) => {
 
   return (
     <UserWrapper>
-      <ToggleButton label="M" active={isMute} color={'red'} onClick={handleMuteToggle} />
-      <ToggleButton label="S" active={isSolo} color={'green'} onClick={handleSoloToggle} />
+      <ButtonGroup>
+        <ToggleButton label="M" active={isMute} color={'red'} onClick={handleMuteToggle} isDisabled={false} />
+        <ToggleButton label="S" active={isSolo} color={'green'} onClick={handleSoloToggle} isDisabled={false} />
+      </ButtonGroup>
       <UserLabel name={name} />
       <SyncIndicator offsetMs={mockSync} />
       <UserLatency getLatency={() => latencyRef.current} /> {/* Only this updates */}
-      <UserAudioMonitor leftLevel={mockLeft} rightLevel={mockRight} />
+      <UserMonitor leftLevel={mockLeft} rightLevel={mockRight} />
     </UserWrapper>
   );
 };
+
+export default User;
 
 const UserWrapper = styled.div`
   background-color: #1c1c1c;
@@ -70,6 +74,12 @@ const UserWrapper = styled.div`
   width: 100%;
   gap: 15px;
   box-sizing: border-box;
+  justify-content: space-evenly;
 `;
 
-export default User;
+const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  align-items: center;
+`;

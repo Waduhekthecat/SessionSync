@@ -1,5 +1,5 @@
 import React from 'react';
-import AudioActivityBar from '../track/TrackAudioMonitor';
+import AudioActivityBar from '../track/TrackMonitor';
 
 interface UserAudioMonitorProps {
   leftLevel: number;

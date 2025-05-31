@@ -7,7 +7,7 @@ interface TrackAudioMonitorProps {
     width?: number;
 }
 
-const TrackAudioMonitor: React.FC<TrackAudioMonitorProps> = ({
+const TrackMonitor: React.FC<TrackAudioMonitorProps> = ({
     level,
     height = 60,
     width = 8,
@@ -15,11 +15,22 @@ const TrackAudioMonitor: React.FC<TrackAudioMonitorProps> = ({
     const clampedLevel = Math.max(0, Math.min(1, level));
 
     return (
-        <Container height={height} width={width}>
-            <Level level={clampedLevel} />
-        </Container>
+        <TrackMonitorContainer>
+            <Container height={height} width={width}>
+                <Level level={clampedLevel} />
+            </Container>
+        </TrackMonitorContainer>
     );
 };
+
+export default TrackMonitor;
+
+const TrackMonitorContainer = styled.div`
+  display: flex;
+  gap: 3px;
+  align-items: center;
+  height: 100%;
+`;
 
 const Container = styled.div<{ height: number; width: number }>`
   position: relative;
@@ -39,5 +50,3 @@ const Level = styled.div<{ level: number }>`
   background-color: #00ff00;
   transition: height 0.1s ease-out;
 `;
-
-export default TrackAudioMonitor;

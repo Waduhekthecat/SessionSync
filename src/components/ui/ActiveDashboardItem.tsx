@@ -1,10 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import ChatPanel from './ChatPanel';
 
 const ActiveDashboardItem: React.FC = () => {
-  return <DashboardItemContainer>
+  return (
+    <DashboardItemContainer>
+      <ChatPanel />
     </DashboardItemContainer>
+  )
 };
+
+
+
+export default ActiveDashboardItem;
 
 const DashboardItemContainer = styled.div`
     grid-area: 4 / 6 / 5 / 10;
@@ -12,5 +20,3 @@ const DashboardItemContainer = styled.div`
     width: 100%;
     background-color: #121212;
 `;
-
-export default ActiveDashboardItem;

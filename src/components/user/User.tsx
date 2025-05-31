@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import UserLabel from './UserLabel';
-import MuteButton from '../buttons/MuteButton';
-import SoloButton from '../buttons/SoloButton';
+import ToggleButton from '../buttons/ToggleButton';
 import UserAudioMonitor from './UserAudioMonitor';
 import SyncIndicator from './SyncIndicator';
 import UserLatency from './UserLatency'; 
@@ -15,6 +14,32 @@ interface UserProps {
 const User: React.FC<UserProps> = ({ name }) => {
   const latencyRef = useRef(0);
 
+  const [isMute, setIsMute] = useState(false);
+  const [isSolo, setIsSolo] = useState(false);
+
+  const mockLeft = Math.random();
+  const mockRight = Math.random();
+  const mockSync = Math.random() * 100;
+
+
+  const handleMuteToggle = () => {
+    if (isMute) {
+      setIsMute(false);
+    } else {
+      setIsMute(true);
+      setIsSolo(false);
+    }
+  };
+
+  const handleSoloToggle = () => {
+    if (isSolo) {
+      setIsSolo(false);
+    } else {
+      setIsSolo(true);
+      setIsMute(false);
+    }
+  };  
+  
   // Update latency every 200ms to "simulate" live network
   useEffect(() => {
     const interval = setInterval(() => {
@@ -25,14 +50,10 @@ const User: React.FC<UserProps> = ({ name }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const mockLeft = Math.random();
-  const mockRight = Math.random();
-  const mockSync = Math.random() * 100;
-
   return (
     <UserWrapper>
-      <MuteButton />
-      <SoloButton />
+      <ToggleButton label="M" active={isMute} color={'red'} onClick={handleMuteToggle} />
+      <ToggleButton label="S" active={isSolo} color={'green'} onClick={handleSoloToggle} />
       <UserLabel name={name} />
       <SyncIndicator offsetMs={mockSync} />
       <UserLatency getLatency={() => latencyRef.current} /> {/* Only this updates */}

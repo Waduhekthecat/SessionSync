@@ -6,7 +6,7 @@ import UserPanel from '../components/ui/UserPanel';
 import VerticalDashboard from '../components/ui/VerticalDashboard';
 import ControlBar from '../components/ui/ControlBar';
 import TracksPanel from '../components/ui/TracksPanel';
-import ActiveDashboardItem from '../components/ui/ActiveDashboardItem';
+import ChatPanel from '../components/ui/ChatPanel';
 import FooterBar from '../components/ui/Footer';
 // import Track from '../components/track/Track';
 
@@ -18,7 +18,7 @@ const AppLayout: React.FC = () => {
             <UserPanel />
             <ControlBar />
             <TracksPanel />
-            <ActiveDashboardItem />
+            <ChatPanel />
             <VerticalDashboard />
             <FooterBar />
         </Container>

@@ -46,15 +46,6 @@ const TracksPanel: React.FC = () => {
   // Show your plugin manager modal or whatever
 };
 
-{/* <Track
-  // ... other props
-  onFXClick={() => handleFXClick(track.id)}
-  ref={(el) => {
-    trackRefs.current[index] = el;
-  }}
-/> */}
-
-
   const toggleMute = (id: string) => {
     setTracks((prev) =>
       prev.map((track) =>

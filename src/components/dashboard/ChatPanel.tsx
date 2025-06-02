@@ -4,13 +4,24 @@ import styled from 'styled-components';
 const ChatPanel: React.FC = () => {
   const [messages, setMessages] = useState<string[]>([]);
   const [input, setInput] = useState('');
+
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const sendButtonRef = useRef<HTMLButtonElement | null>(null);
+
 
   const handleSend = () => {
-    if (input.trim() === '') return;
-    setMessages(prev => [...prev, input]);
-    setInput('');
-  };
+  if (input.trim() === '') return;
+
+  if (sendButtonRef.current) {
+    sendButtonRef.current.classList.add('pressed');
+    setTimeout(() => {
+      sendButtonRef.current?.classList.remove('pressed');
+    }, 100); 
+  }
+
+  setMessages(prev => [...prev, input]);
+  setInput('');
+};
 
   useEffect(() => {
     if (messagesEndRef.current) {
@@ -39,7 +50,9 @@ const ChatPanel: React.FC = () => {
           onKeyDown={handleKeyDown}
           placeholder="Type a message..."
         />
-        <SendButton onClick={handleSend}>Send</SendButton>
+      <SendButton ref={sendButtonRef} onClick={handleSend}>
+        Send
+      </SendButton>      
       </InputArea>
     </Container>
   );
@@ -74,7 +87,6 @@ const Message = styled.div`
   max-width: 100%;
 `;
 
-
 const InputArea = styled.div`
     display: flex;
     gap: 6px;
@@ -92,7 +104,6 @@ const ChatInput = styled.input`
     overflow: hidden;
 `;
 
-
 const SendButton = styled.button`
   background-color: #007bff;
   color: white;
@@ -100,8 +111,15 @@ const SendButton = styled.button`
   padding: 6px 12px;
   border-radius: 4px;
   cursor: pointer;
+  transition: transform 0.1s ease, background-color 0.2s ease;
 
   &:hover {
-    background-color: #0056b3;
+    background-color: rgb(61, 187, 255);
+  }
+
+  &:active,
+  &.pressed {
+    transform: scale(0.95);
   }
 `;
+

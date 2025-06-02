@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import BPM from '../inputs/BPM';
+import MetronomeButton from '../buttons/MetronomeButton';
 
-const HorizontalControlBar: React.FC = () => {
+
+
+const SettingsController: React.FC = () => {
+const [bpm, setBpm] = useState(120);
+
   return (
     <ControlBar>
       <LeftSection><h2>Tracks</h2></LeftSection>
       <RightSection>
-        <ControlButton>Tempo</ControlButton>
-        <ControlButton>Metronome</ControlButton>
+        <BPM
+          initialBPM={bpm}
+          onBPMChange={(newBpm) => setBpm(newBpm)}
+        />
+        <MetronomeButton label="Metronome" width={70} height={30} />
       </RightSection>
     </ControlBar>
   );
 };
+
+export default SettingsController;
+
 
 const ControlBar = styled.div`
     grid-area: 3 / 1 / 4 / 10;
@@ -37,19 +49,3 @@ const RightSection = styled.div`
     display: flex;
     justify-content: space-evenly;
 `;
-const ControlButton = styled.button`
-    width: 100px;
-    height: 40px;
-    font-size: 13px;
-    padding: 8px 16px;
-    background-color: #262626;
-    border: none;
-    border-radius: 10px;
-    color: white;
-    cursor: pointer;
-    &:hover {
-        background-color: #777;
-  }
-`;
-
-export default HorizontalControlBar;

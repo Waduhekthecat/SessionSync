@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-interface LabelProps {
-  number: number;
+interface UserLabelProps {
+  number?: number;
   onNameChange?: (newName: string) => void; // Optional callback to notify parent
 }
 
-const Label: React.FC<LabelProps> = ({ number, onNameChange }) => {
+const UserLabel: React.FC<UserLabelProps> = ({ number, onNameChange }) => {
   const [name, setName] = useState(`Track ${number}`);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,4 +68,4 @@ const StyledInput = styled.input`
   outline: none;
 `;
 
-export default Label;
+export default UserLabel;

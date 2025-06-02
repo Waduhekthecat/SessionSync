@@ -1,6 +1,6 @@
 import { useState, forwardRef, useRef } from 'react';
 import styled from 'styled-components';
-import Label from './Label';
+import Label from '../inputs/TrackLabel';
 import InputSelector, { AudioInputOption } from './AudioInputSelector';
 import FXButtonGroup from '../buttons/FxButtonGroup';
 import Knob from './Knob';

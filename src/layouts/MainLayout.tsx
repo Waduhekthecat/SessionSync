@@ -1,17 +1,18 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import TitleBar from '../components/ui/TitleBar';
 import VisualDisplay from '../components/ui/VisualDisplay';
 import UserPanel from '../components/user/UserPanel';
-import VerticalDashboard from '../components/dasboard/VerticalDashboard';
-import ControlBar from '../components/ui/ControlBar';
+import VerticalDashboard from '../components/dashboard/VerticalDashboard';
+import ControlBar from '../components/ui/SettingsController';
 import TracksPanel from '../components/tracks/TracksPanel';
-import ChatPanel from '../components/dasboard/ChatPanel';
+import ChatPanel from '../components/dashboard/ChatPanel';
 import FooterBar from '../components/ui/Footer';
 
-const AppLayout: React.FC = () => {
+const MainLayout: React.FC = () => {
     return (
-        <Container>
+        <MainContainer>
             <TitleBar />
             <VisualDisplay />
             <UserPanel />
@@ -20,11 +21,12 @@ const AppLayout: React.FC = () => {
             <ChatPanel />
             <VerticalDashboard />
             <FooterBar />
-        </Container>
+            <Outlet />
+        </MainContainer>
     );
 };
 
-const Container = styled.div`
+const MainContainer = styled.div`
     height: 100vh;
     width: 100vw;
     display: grid;
@@ -33,4 +35,4 @@ const Container = styled.div`
     background-color: #3F3F3F;
 `;
 
-export default AppLayout;
+export default MainLayout;

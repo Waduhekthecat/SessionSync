@@ -17,7 +17,7 @@ export const getAudioInstance = () => {
 };
 
 const AuthLayout: React.FC = () => {
-  const { login } = useAuth();
+  const { signIn } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
@@ -43,7 +43,7 @@ const AuthLayout: React.FC = () => {
     e.preventDefault();
 
     if (email === 'joshuajdarby@gmail.com' && password === 'Flakker12.') {
-      login();
+      signIn();
 
       // ✅ Stop the music
       if (audioInstance) {

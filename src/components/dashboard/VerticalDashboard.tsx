@@ -56,7 +56,7 @@ const IconButton = styled.button`
   transition: color 0.2s, transform 0.2s;
   
   &:hover {
-    color: #61dafb;
+    color: rgb(61, 187, 255);
     transform: scale(1.15);
   }
 

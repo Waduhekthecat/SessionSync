@@ -115,7 +115,7 @@ export default Track;
 const TrackWrapper = styled.div<{ $isSelected: boolean }>`
   display: flex;
   height: 70px;
-  width: 585px;
+  width: 100%;
   margin-top: 4px;
   justify-content: space-evenly;
   background-color: ${({ $isSelected }) => ($isSelected ? '#B0B0B0' : '#8D8D8D')};

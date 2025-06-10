@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import MainLayout from './layouts/MainLayout';
-import MainView from './views/app/MainView';
+import SessionLayout from './layouts/SessionLayout';
+import SessionView from './views/app/SessionView';
+import LoungeView from './views/app/LoungeView';
 import AuthView from './views/auth/AuthView';
 import AuthLayout from './layouts/AuthLayout';
 import ProtectedRoute from './routes/ProtectedRoute'; // 👈 Make sure you created this
@@ -9,7 +10,6 @@ import { AuthProvider } from './contexts/AuthContext'; // 👈 Wrap app with thi
 
 function App() {
 
-  // global keyboard shortcut control
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r') {
@@ -31,10 +31,13 @@ function App() {
             <Route path="/" element={<AuthView />} />
           </Route>
 
+          <Route path="/lounge" element={<LoungeView />} />
+
           {/* Protected routes with MainLayout */}
-          <Route element={<ProtectedRoute> <MainLayout /></ProtectedRoute>}>
-            <Route path="/session" element={<MainView />} />
-          </Route>
+          <Route element={<ProtectedRoute><SessionLayout /></ProtectedRoute>}>
+  <Route path="/session/:sessionId" element={<SessionView />} />
+</Route>
+
         </Routes>
       </Router>
     </AuthProvider>

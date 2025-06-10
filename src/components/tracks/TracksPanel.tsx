@@ -123,8 +123,7 @@ export default TracksPanel;
 
 const TracksContainer = styled.div`
   grid-area: 4 / 1 / 5 / 6;
-  height: 322px;
-  max-height: 322px;
+  max-height: 100%;
   overflow-y: scroll;  
   overflow-x: hidden;
   width: 100%;

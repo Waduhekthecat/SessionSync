@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
-import ToolTipPortal from '../portals/ToolTip';
+import ToolTipPortal from '../portals/ToolTipModal';
 
 interface KnobProps {
   minAngle: number;

@@ -16,7 +16,7 @@ const [bpm, setBpm] = useState(120);
           initialBPM={bpm}
           onBPMChange={(newBpm) => setBpm(newBpm)}
         />
-        <MetronomeButton label="Metronome" width={70} height={30} />
+        <MetronomeButton label="Metronome" width={100} height={30} />
       </RightSection>
     </ControlBar>
   );

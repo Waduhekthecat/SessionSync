@@ -8,8 +8,8 @@ const Footer: React.FC = () => {
 
 const FooterContainer = styled.div`
     grid-area: 5 / 1 / 6 / 11;
-    height: 100%;
-    width: 100%;
+    max-height: 100%;
+    max-width: 100%;
     background-color:rgb(24, 24, 24);
 `;
 

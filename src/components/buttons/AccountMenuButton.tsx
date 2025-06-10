@@ -4,15 +4,22 @@ import { IconButton, Button, ClickAwayListener } from '@mui/material';
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
+import AccountModal from '../portals/AccountModal';
 
 const AccountMenu: React.FC = () => {
-    const [open, setOpen] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [acctSettingsOpen, setAcctSettingsOpen] = useState(false);
     const { signOut } = useAuth();
     const navigate = useNavigate();
 
     const anchorRef = useRef<HTMLButtonElement>(null);
     const toggleMenu = () => {
-        setOpen(prev => !prev);
+        setDropdownOpen(prev => !prev);
+    };
+
+    const handleAccountSettings = () => {
+      setAcctSettingsOpen(true);
+      setDropdownOpen(false);
     };
 
     const handleSignOut = (e: React.MouseEvent) => {
@@ -21,23 +28,28 @@ const AccountMenu: React.FC = () => {
         navigate('/', { replace: true });
     };
 
-  return (
-    <ClickAwayListener onClickAway={() => setOpen(false)}>
+  return (<>
+    <ClickAwayListener onClickAway={() => setDropdownOpen(false)}>
       <div style={{ position: 'relative' }}>
         <StyledIconButton onClick={toggleMenu} ref={anchorRef}>
           <PersonIcon />
         </StyledIconButton>
 
-        {open && (
+        {dropdownOpen && (
           <Dropdown>
-            <AccountButton>Account</AccountButton>
+            <AccountButton variant="text" onClick={handleAccountSettings} >Account</AccountButton>
             <Divider />
             <SignOutButton variant="text" onClick={handleSignOut}>Sign out</SignOutButton>
           </Dropdown>
         )}
-
       </div>
     </ClickAwayListener>
+    <AccountModal 
+      isOpen={acctSettingsOpen} 
+      onClose={() => setAcctSettingsOpen(false)}
+      name="Josh"
+      email="joshuajdarby@gmail.com" />
+  </>
   );
 };
 

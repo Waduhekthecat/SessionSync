@@ -42,7 +42,7 @@ const ButtonContainer = styled.button<Pick<MetronomeProps, 'width' | 'height'>>`
 `;
 
 const Label = styled.span`
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 0.05em;

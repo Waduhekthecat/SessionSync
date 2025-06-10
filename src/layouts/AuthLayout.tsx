@@ -39,7 +39,7 @@ const AuthLayout: React.FC = () => {
     };
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (email === 'joshuajdarby@gmail.com' && password === 'Flakker12.') {
@@ -52,7 +52,7 @@ const AuthLayout: React.FC = () => {
         audioInstance = null;
       }
 
-      navigate('/session', { replace: true });
+      navigate('/lounge', { replace: true });
     } else {
       setError('Invalid login credentials');
     }
@@ -68,7 +68,7 @@ const AuthLayout: React.FC = () => {
 
       <LoginCard>
         <Title>🎧 SessionSync: JamRoom</Title>
-        <Form onSubmit={handleLogin}>
+        <Form onSubmit={handleSignIn}>
           <Input
             type="email"
             placeholder="Email"

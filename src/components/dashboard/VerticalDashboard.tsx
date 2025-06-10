@@ -20,7 +20,6 @@ const Sidebar = () => {
     { icon: <ExtensionIcon />, label: 'Plugins' },
     { icon: <CollaboratorsIcon />, label: 'Collaborators' },
     { icon: <SettingsIcon />, label: 'Settings' },
-    { icon: <AccountIcon />, label: 'Account' }
   ];
 
   return (

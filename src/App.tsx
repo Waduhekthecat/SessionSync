@@ -35,8 +35,8 @@ function App() {
 
           {/* Protected routes with MainLayout */}
           <Route element={<ProtectedRoute><SessionLayout /></ProtectedRoute>}>
-  <Route path="/session/:sessionId" element={<SessionView />} />
-</Route>
+            <Route path="/session/:sessionId" element={<SessionView />} />
+          </Route>
 
         </Routes>
       </Router>

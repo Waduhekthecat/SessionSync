@@ -1,26 +1,50 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import LobbyBg from '../../assets/images/LobbyBg.png';
+import CreateRoomModal from '../../components/portals/CreateSessionModal';
+import PasswordModal from '../../components/portals/SessionPasswordModal';
 
 const LoungeView: React.FC = () => {
     const navigate = useNavigate();
+    const [isOpen, setIsOpen] = useState(false);
+    const [promptOpen, setPromptOpen] = useState(false);
+    const [selectedSession, setSelectedSession] = useState<any>(null);
 
-    const handleCreateSession = () => {
-        navigate('/session');
+    const handleOpenModal = () => {
+        setIsOpen(true);
     };
 
-    const handleJoinSession = (sessionId: string) => {
-        navigate(`/session/${sessionId}`);
+    const handleJoinSession = (session: any) => {
+        if (session.hasPassword) {
+            setSelectedSession(session);
+            setPromptOpen(true);
+        } else {
+            navigate(`/session/${session.id}`);
+        }
+    };
+
+    const handlePasswordSubmit = (password: string) => {
+        // TODO: Replace this mock check with real backend validation
+        const correctPassword = "test"; // This should come from server
+
+        if (password === correctPassword) {
+            navigate(`/session/${selectedSession.id}`);
+        } else {
+            alert("Incorrect password.");
+        }
+        setPromptOpen(false);
+        setSelectedSession(null);
     };
 
     // Mock session list
     const sessions = [
-        { id: 'abc123', name: 'Evening Chill', location: 'Chicago, IL', userCount: 3 },
-        // More sessions can be added here
+        { id: 'abc123', name: 'Evening Chill', location: 'Chicago, IL', userCount: 3, hasPassword: true },
+        { id: 'xyz789', name: 'Morning Groove', location: 'Austin, TX', userCount: 2, hasPassword: false }
     ];
 
     return (
+      <>
         <Background>
             <SessionContainer>
                 <Title>🎵 Open Jam Sessions</Title>
@@ -37,14 +61,26 @@ const LoungeView: React.FC = () => {
                                         <span>{session.userCount} musicians</span>
                                     </SessionMeta>
                                 </SessionInfo>
-                                <JoinButton onClick={() => handleJoinSession(session.id)}>Join</JoinButton>
+                                <JoinButton onClick={() => handleJoinSession(session)}>Join</JoinButton>
                             </SessionCard>
                         ))
                     )}
                 </SessionList>
-                <CreateButton onClick={handleCreateSession}>Create Session</CreateButton>
+                <CreateButton onClick={handleOpenModal}>Create Session</CreateButton>
             </SessionContainer>
         </Background>
+        <CreateRoomModal 
+          isOpen={isOpen} 
+          onClose={() => setIsOpen(false)}
+          location="Houston, TX"
+        />
+        <PasswordModal 
+          isOpen={promptOpen}
+          onClose={() => setPromptOpen(false)}
+          onSubmit={handlePasswordSubmit}
+          sessionName={selectedSession?.name || ""}
+        />
+        </>
     );
 };
 

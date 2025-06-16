@@ -37,7 +37,7 @@ const [users, setUsers] = useState<UserData[]>([]);
 };
 
 const UsersContainer = styled.div`
-  grid-area: 2 / 6 / 3 / 10;
+  grid-area: 2 / 6 / 3 / 11;
   height: 100%;
   width: 100%;
   background-color: #1C1C1C;

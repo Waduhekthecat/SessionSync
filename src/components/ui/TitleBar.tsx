@@ -17,7 +17,7 @@ const TitleBar: React.FC = () => {
 export default TitleBar;
 
 const TitleBarContainer = styled.div`
-  grid-area: 1 / 1 / 2 / 11;
+  grid-area: 1 / 1 / 2 / 12;
   width: 100%;
   height: 50px;
   background-color:rgb(43, 43, 43);

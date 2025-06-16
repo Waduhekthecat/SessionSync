@@ -26,7 +26,7 @@ export default SettingsController;
 
 
 const ControlBar = styled.div`
-    grid-area: 3 / 1 / 4 / 10;
+    grid-area: 3 / 1 / 4 / 11;
     display: flex;
     width: 100%;
     height: 50px;              

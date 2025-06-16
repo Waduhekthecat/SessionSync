@@ -13,6 +13,7 @@ const AccountMenu: React.FC = () => {
     const navigate = useNavigate();
 
     const anchorRef = useRef<HTMLButtonElement>(null);
+    
     const toggleMenu = () => {
         setDropdownOpen(prev => !prev);
     };

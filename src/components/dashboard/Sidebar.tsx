@@ -1,9 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
 import ChatIcon from '@mui/icons-material/Chat';
 import SettingsIcon from '@mui/icons-material/Settings';
 import HomeIcon from '@mui/icons-material/Home';
-import AccountIcon from '@mui/icons-material/Person';
 import MetronomeIcon from '@mui/icons-material/AccessTime';
 import TracksIcon from '@mui/icons-material/QueueMusic';
 import PianoIcon from '@mui/icons-material/Piano';
@@ -34,8 +32,7 @@ const Sidebar = () => {
 };
 
 const Container = styled.div`
-  grid-area: 2 / 10 / 5 / 11;
-  min-width: 80px;               
+  grid-area: 2 / 11 / 5 / 12;
   width: 100%;
   height: calc(100%);              
   display: flex;
@@ -60,7 +57,7 @@ const IconButton = styled.button`
   }
 
   svg {
-    font-size: 28px;
+    font-size: 23px;
   }
 
   &:focus {

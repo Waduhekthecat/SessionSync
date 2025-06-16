@@ -61,7 +61,7 @@ const ChatPanel: React.FC = () => {
 export default ChatPanel;
 
 const Container = styled.div`
-    grid-area: 4 / 6 / 5 / 10;
+    grid-area: 4 / 6 / 5 / 11;
     display: flex;
     flex-direction: column;
     height: 100%;

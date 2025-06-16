@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import TitleBar from '../components/ui/TitleBar';
 import VisualDisplay from '../components/ui/VisualDisplay';
 import UserPanel from '../components/user/UserPanel';
-import VerticalDashboard from '../components/dashboard/VerticalDashboard';
+import Dashboard from '../components/dashboard/Sidebar';
 import ControlBar from '../components/ui/SettingsController';
 import TracksPanel from '../components/tracks/TracksPanel';
 import ChatPanel from '../components/dashboard/ChatPanel';
@@ -20,7 +20,7 @@ const SessionLayout: React.FC = () => {
             <ControlBar />
             <TracksPanel />
             <ChatPanel />
-            <VerticalDashboard />
+            <Dashboard />
             <FooterBar />
             <Outlet />
         </MainContainer>
@@ -32,7 +32,7 @@ const MainContainer = styled.div`
     width: 100vw;
     display: grid;
     grid-template-rows: 50px 40.5% 50px 40.5% 1fr;
-    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 10%;
+    grid-template-columns: 10% 10% 10% 10% 10% 10% 10% 10% 10% 4% 6%;
     background-color: #3F3F3F;
 `;
 
